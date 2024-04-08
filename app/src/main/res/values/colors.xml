@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <color name="PrimaryLight">#FF0061a4</color>
+    <color name="OnPrimaryLight">#FFFFFFFF</color>
+    <color name="PrimaryContainerLight">#FFd1e4ff</color>
+    <color name="OnPrimaryContainerLight">#FF001d36</color>
+    <color name="SecondaryLight">#FF535f70</color>
+    <color name="OnSecondaryLight">#FF0061a4</color>
+    <color name="SecondaryContainerLight">#FFd7e3f7</color>
+    <color name="OnSecondaryContainerLight">#FF101c2b</color>
+
+    <color name="TertiaryLight">#FF6b5778</color>
+    <color name="OnTertiaryLight">#FFffffff</color>
+    <color name="TertiaryContainerLight">#FFf2daff</color>
+    <color name="OnTertiaryContainerLight">#FF251431</color>
+
+    <color name="ErrorLight">#FFba1a1a</color>
+    <color name="OnErrorLight">#FFffffff</color>
+    <color name="ErrorContainerLight">#FFffdad6</color>
+    <color name="OnErrorContainerLight">#FF410002</color>
+
+    <color name="BackgroundLight">#FFfdfcff</color>
+    <color name="OnBackgroundLight">#FF1a1c1e</color>
+    <color name="SurfaceLight">#FFfdfcff</color>
+
+    <color name="OutlineLight">#FF73777f</color>
+    <color name="SurfaceVariantLight">#FFdfe2eb</color>
+    <color name="OnSurfaceVariantLight">#FF43474e</color>
+
+</resources>
