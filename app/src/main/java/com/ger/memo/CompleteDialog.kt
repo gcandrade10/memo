@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -15,18 +17,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import com.google.android.material.color.utilities.Score
 
 private val DialogPadding = PaddingValues(all = 24.dp)
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun EDialog(
+fun CompleteDialog(
+    score: Float,
     text: @Composable () -> Unit,
-    confirm: () -> Unit,
     restart: () -> Unit,
-    cancel: () -> Unit,
+    play: () -> Unit,
 ) = BasicAlertDialog(
-    onDismissRequest = { cancel },
+    onDismissRequest = { },
     modifier = Modifier,
     properties = DialogProperties()
 ) {
@@ -41,24 +44,19 @@ fun EDialog(
             Row(Modifier.padding(bottom = 16.dp)) {
                 text()
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
+
+            Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
                 Column {
-                    menuButton(text = "Exit", Modifier.width(100.dp)) {
-                        confirm.invoke()
+                    menuHButton(Icons.Filled.Refresh, text = "Restart") {
+                        restart.invoke()
                     }
                 }
                 Column {
-                    Row {
-                        menuButton(text = "Restart", Modifier.width(100.dp)) {
-                            restart.invoke()
-                        }
+                    menuHButton(Icons.Filled.PlayArrow, text = "Play", enabled = score > 1.99) {
+                        play.invoke()
                     }
                 }
             }
-
         }
     }
 }

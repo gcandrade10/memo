@@ -24,6 +24,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.ViewModelProvider
+import com.ger.memo.viewmodel.Image
+import com.ger.memo.viewmodel.PairGameState
+import com.ger.memo.viewmodel.PairsViewModel
 
 class Pairs : ComponentActivity() {
 

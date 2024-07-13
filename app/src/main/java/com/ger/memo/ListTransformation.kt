@@ -1,5 +1,7 @@
 package com.ger.memo
 
+import com.ger.memo.viewmodel.Image
+
 object ListTransformation {
     fun printIt(n: Int, m: Int, numbers: IntArray) {
         var numbIndex = 0

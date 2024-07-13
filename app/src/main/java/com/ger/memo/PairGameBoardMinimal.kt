@@ -4,15 +4,19 @@ import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.ger.memo.viewmodel.IPairGameState
+import com.ger.memo.viewmodel.Image
 import com.touchlane.gridpad.GridPad
 import com.touchlane.gridpad.GridPadCells
 import com.touchlane.gridpad.GridPadPlacementPolicy
@@ -58,18 +62,19 @@ fun PairGameBoardMinimal(
                 )
             ) {
                 ListTransformation.fillAndSort(gameState.list).forEachIndexed { _, image ->
-                    if(image != null){
+                    if (image != null) {
                         item {
                             PairItem(image, interactionSource, viewModel, image.index)
                         }
-                    }else{
-                        item { 
+                    } else {
+                        item {
                             Text(text = ".")
                         }
                     }
 
                 }
-            }        }
+            }
+        }
     }
 
 
@@ -98,15 +103,32 @@ fun PairItem(
 ) {
     FlipCard(if (image.discovering || image.discovered) CardFace.Front else CardFace.Back,
         back = {
-            Image(painter = painterResource(id = R.drawable.kiwi_bird),
-                contentDescription = null,
-                modifier = Modifier
-                    .clickable(
-                        interactionSource = interactionSource, indication = null
-                    ) {
-                        viewModel.onclick(index)
-                    }
-                    .size(237.dp))
+            Box(modifier = Modifier
+                .padding(8.dp)
+                .size(237.dp)
+//                .clip(CircleShape)
+//                .background(Color(0xFFFF7F50))
+
+                .drawBehind {
+//                    drawCircle(Color(0xFFFF7F50), radius = 99.0f)
+                    drawCircle(Color(0xFFFF926A), radius = 99.0f)
+                }
+
+                .clickable(
+                    interactionSource = interactionSource, indication = null
+                ) {
+                    viewModel.onclick(index)
+                }
+            )
+//            Image(painter = painterResource(id = R.drawable.kiwi_bird),
+//                contentDescription = null,
+//                modifier = Modifier
+//                    .clickable(
+//                        interactionSource = interactionSource, indication = null
+//                    ) {
+//                        viewModel.onclick(index)
+//                    }
+//                    .size(237.dp))
 //                    .aspectRatio(1f, matchHeightConstraintsFirst = true))
         },
         front = {

@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Memo"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Levels"
+            android:exported="false" />
         <activity
             android:name=".Menu"
             android:exported="true"
@@ -23,13 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Pairs"
             android:exported="true"
             android:label="Pairs"
             android:theme="@style/Theme.SpotItFullScreen" />
-
         <activity
             android:name=".PairsH"
             android:exported="true"
@@ -41,9 +41,6 @@
             android:label="Pairs"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.SpotItFullScreen" />
-
-
     </application>
-
 
 </manifest>

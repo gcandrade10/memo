@@ -5,6 +5,8 @@ import android.media.MediaPlayer
 import android.os.CountDownTimer
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.ger.memo.viewmodel.IPairGameState
+import com.ger.memo.viewmodel.Image
 
 class PairsMultiViewModel(val app: Application) : AndroidViewModel(app), OnClick {
 
@@ -109,14 +111,22 @@ class PairsMultiViewModel(val app: Application) : AndroidViewModel(app), OnClick
         val discovered = state.first!!.drawable == state.second!!.drawable
         val cleanList = cleanDiscoveryFromList(state.list, discovered)
 
+        val isGameOver = !isGameAlive(cleanList)
+
         return state.copy(
-            list = cleanList,
+            list = if (isGameOver) cleanList(state.list) else cleanList,
             first = null,
             second = null,
-            gameOver = !isGameAlive(cleanList),
+            gameOver = isGameOver,
             gameTime = time.value,
             tryCount = state.tryCount + 1
         )
+    }
+
+    private fun cleanList(list: List<Image>): List<Image> {
+        return list.map {
+            it.copy(discovering = false, discovered = false)
+        }
     }
 
     private fun cleanDiscoveryFromList(list: List<Image>, discovered: Boolean): List<Image> {

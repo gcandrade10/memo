@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import com.ger.memo.viewmodel.Image
+import com.ger.memo.viewmodel.PairGameState
+import com.ger.memo.viewmodel.PairsViewModel
 import kotlin.math.ceil
 
 class PairsH : ComponentActivity() {
@@ -46,26 +51,22 @@ class PairsH : ComponentActivity() {
                     viewModel.setShowExitDialog(true)
                 })
                 if (gameState.gameOver) {
-                    EDialog({
-                        Column(Modifier.fillMaxWidth()) {
-                            with(gameState) {
-                                star(measureScore(this))
+                    val score = measureScore(gameState)
+                    CompleteDialog(score, {
+                        Column(
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 24.dp)) {
+                            star(score)
 //                                Text("Time: $gameTime seconds", Modifier.fillMaxWidth())
 //                                Text("$tryCount tries", Modifier.fillMaxWidth())
 //                                Text("$luckyGuesses lucky guesses", Modifier.fillMaxWidth())
-                                Text("$repetitions repetitions", Modifier.fillMaxWidth())
-                            }
-
+//                                Text("$repetitions repetitions", Modifier.fillMaxWidth())
                         }
-                    }, {
-                        viewModel.saveScore()
-                        finish()
                     }, {
                         viewModel.restart()
                     }) {
-                        menuButton(text = "Play") {
-                            viewModel.replay()
-                        }
+                        viewModel.replay()
                     }
                 }
 
@@ -84,10 +85,8 @@ class PairsH : ComponentActivity() {
                         viewModel.setShowExitDialog(false)
                         viewModel.restart()
                     }) {
-                        menuButton(text = "Cancel") {
-                            viewModel.setShowExitDialog(false)
-                            viewModel.resume()
-                        }
+                        viewModel.setShowExitDialog(false)
+                        viewModel.resume()
                     }
                 }
                 PairGameBoard(viewModel, gameState)
@@ -97,7 +96,7 @@ class PairsH : ComponentActivity() {
 
     private fun measureScore(pairGameState: PairGameState): Float {
         val total = pairGameState.size * 2
-        return (5.0 * (total - pairGameState.repetitions) / total).roundUpToMultipleOf(0.5).toFloat()
+        return (3.0 * (total - pairGameState.repetitions) / total).roundUpToMultipleOf(0.5).toFloat()
     }
 
 

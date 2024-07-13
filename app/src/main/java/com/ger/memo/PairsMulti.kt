@@ -4,6 +4,10 @@ import JetpackComposeDarkThemeTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
@@ -64,28 +68,60 @@ class PairsMulti : ComponentActivity() {
         }
     }
 
-    private fun getUserColor(index :Int): Color {
-        return when(index){
-            0-> Color.Blue
-            1-> Color.Red
-            2-> Color.Black
-            else -> Color.Gray
-        }.copy(alpha = 0.35f)
-    }
+//    private fun getUserColor(index :Int): Color {
+//        return when(index){
+//            0-> Color.Blue
+//            1-> Color.Red
+//            2-> Color.Green
+//            else -> Color.Yellow
+//        }.copy(alpha = 0.35f)
+//    }
 
     @Composable
-    private fun Count(color: Color, modifier: Modifier, score: Int) {
-        Text(
-            modifier = modifier
-                .drawBehind {
-                    drawCircle(
-                        color = Color.White,
-                        radius = this.size.maxDimension
-                    )
-                },
-            fontSize = 32.sp, color = color, fontWeight = FontWeight.Bold,
-            text = "$score",
-        )
+    private fun Count(modifier: Modifier, score: Int, isMyTurn: Boolean, color: Color = Color.Black) {
+        val backgroundInfiniteTransition = rememberInfiniteTransition()
+
+        val backgroundBlinking = if (isMyTurn) backgroundInfiniteTransition.animateColor(Color(0xFFFF4400), Color(0xFFFF4400),
+            animationSpec = infiniteRepeatable(
+                animation = keyframes {
+                    durationMillis = 3000
+                    Color(0xFF470000) at 1500
+//                    Color(0xFFFF4400) at 1500
+                }
+            )
+        ).value else Color.White
+
+        Box(modifier
+            .drawBehind {
+                drawCircle(
+//                    color = if(isMyTurn) Color(0xFFFF7F50) else Color.White,
+                    color = if(isMyTurn) Color(0xFFFF4400) else Color.White,
+//                    color = backgroundBlinking,
+                    radius = this.size.maxDimension
+                )
+            }) {
+
+            val infiniteTransition = rememberInfiniteTransition()
+            val blinking = if (isMyTurn) infiniteTransition.animateColor(color, color,
+                animationSpec = infiniteRepeatable(
+                    animation = keyframes {
+                        durationMillis = 3000
+                        Color.White at 1500
+                    }
+                )
+            ).value else color
+
+//            Box(modifier = blinkingModifier
+//                .drawBehind {
+//                    drawCircle(blinking, radius = 20.0f)
+//                })
+
+            Text(
+                modifier = Modifier.align(Alignment.Center),
+                fontSize = 32.sp, color = blinking, fontWeight = FontWeight.Bold,
+                text = "$score",
+            )
+        }
     }
 
     @OptIn(ExperimentalFoundationApi::class)
@@ -95,27 +131,44 @@ class PairsMulti : ComponentActivity() {
             LocalOverscrollConfiguration provides null
         ) {
             val interactionSource = MutableInteractionSource()
-            Box(Modifier.background(getUserColor(gameState.turn))) {
-                PairGameBoardMinimal(viewModel , gameState , interactionSource, Modifier.align(Alignment.Center) )
-                Count(getUserColor(0), Modifier.align(Alignment.BottomStart).padding(start = 16.dp), gameState.p1Score)
-                Count(
-                    getUserColor(1),
-                    Modifier.align(Alignment.TopEnd).padding(end = 16.dp),
-                    gameState.p2Score
+            Box(Modifier.background(Color.LightGray.copy(alpha = 0.20f))) {
+                PairGameBoardMinimal(
+                    viewModel,
+                    gameState,
+                    interactionSource,
+                    Modifier.align(Alignment.Center)
                 )
-                if((gameState.playerCount ?: 0) > 2){
+
+                Count(
+                    Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(start = 16.dp), gameState.p1Score,
+                    gameState.turn == 0
+                )
+                Count(
+                    Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(end = 16.dp),
+                    gameState.p2Score,
+                    gameState.turn == 1
+                )
+                if ((gameState.playerCount ?: 0) > 2) {
                     Count(
-                        getUserColor(2),
-                        Modifier.align(Alignment.BottomEnd).padding(end = 16.dp),
-                        gameState.p3Score
+                        Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(end = 16.dp),
+                        gameState.p3Score,
+                        gameState.turn == 2
                     )
                 }
 
-                if((gameState.playerCount ?: 0) > 3){
+                if ((gameState.playerCount ?: 0) > 3) {
                     Count(
-                        getUserColor(3),
-                        Modifier.align(Alignment.TopStart).padding(start = 16.dp),
-                        gameState.p4Score
+                        Modifier
+                            .align(Alignment.TopStart)
+                            .padding(start = 16.dp),
+                        gameState.p4Score,
+                        gameState.turn == 3
                     )
                 }
             }

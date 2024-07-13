@@ -16,6 +16,7 @@ fun star(rating: Float) {
     val imageBackground = ImageBitmap.imageResource(id = R.drawable.star_background)
     val imageForeground = ImageBitmap.imageResource(id = R.drawable.star_foreground)
     RatingBar(
+        itemCount = 3,
         modifier = Modifier.fillMaxWidth().height(50.dp),
         rating = rating,
         space = 2.dp,

@@ -1,10 +1,13 @@
-package com.ger.memo
+package com.ger.memo.viewmodel
 
 import android.app.Application
 import android.media.MediaPlayer
 import android.os.CountDownTimer
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.ger.memo.Animals
+import com.ger.memo.OnClick
+import com.ger.memo.R
 
 class PairsViewModel(val app: Application) : AndroidViewModel(app), OnClick {
 
@@ -138,12 +141,14 @@ class PairsViewModel(val app: Application) : AndroidViewModel(app), OnClick {
         val newArray = state.tappedList
         newArray[state.second.index] = true
 
+        val isGameOver = !isGameAlive(cleanList)
+
         return state.copy(
-            list = cleanList,
+            list = if (isGameOver) cleanList(state.list) else cleanList,
             tappedList = newArray,
             first = null,
             second = null,
-            gameOver = !isGameAlive(cleanList),
+            gameOver = isGameOver,
             gameTime = time.value,
             tryCount = state.tryCount + 1,
             luckyGuesses = luckyGuesses
@@ -228,7 +233,7 @@ data class PairGameState(
     override val size : Int = 5,
     override val first: Image? = null,
     override val second: Image? = null
-):IPairGameState(gameOver, gameTime, list, tappedList, showExitDialog, tryCount, luckyGuesses, repetitions, size, first, second)
+): IPairGameState(gameOver, gameTime, list, tappedList, showExitDialog, tryCount, luckyGuesses, repetitions, size, first, second)
 
 data class Image(
     val index: Int,
