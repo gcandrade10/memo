@@ -9,29 +9,36 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelProvider
+import com.ger.memo.viewmodel.MenuViewModel
 
 class Menu : ComponentActivity() {
 
+    private lateinit var viewModel: MenuViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        viewModel = ViewModelProvider(this)[MenuViewModel::class.java]
         setContent {
+
+            val isSoundEnabled = viewModel.isSoundEnabled.collectAsState(initial = false)
+
             JetpackComposeDarkThemeTheme {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
                     LazyColumn(
@@ -57,6 +64,20 @@ class Menu : ComponentActivity() {
                             }
                         }
                     }
+
+
+                    FloatingActionButton(
+                        onClick = {
+                            viewModel.toggleSound(!isSoundEnabled.value)
+                        }, modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(24.dp)
+                    ) {
+                        val icon =
+                            if (isSoundEnabled.value) R.drawable.sound else R.drawable.sound_off
+                        Icon(painterResource(icon), "toggle sound", modifier = Modifier.size(24.dp))
+                    }
+
                 }
             }
         }
@@ -73,7 +94,7 @@ class Menu : ComponentActivity() {
 }
 
 @Composable
-fun menuButton(text: String, modifier: Modifier = Modifier.fillMaxWidth(), onClick: () -> Unit, ) {
+fun menuButton(text: String, modifier: Modifier = Modifier.fillMaxWidth(), onClick: () -> Unit) {
     Button(
         colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
         onClick = onClick,
@@ -86,10 +107,11 @@ fun menuButton(text: String, modifier: Modifier = Modifier.fillMaxWidth(), onCli
 }
 
 @Composable
-fun menuHButton(icon: ImageVector, text: String, enabled:Boolean = true, onClick: () -> Unit) {
+fun menuHButton(icon: ImageVector, text: String, enabled: Boolean = true, onClick: () -> Unit) {
     IconButton(
         enabled = enabled,
-        modifier = Modifier.width(100.dp)
+        modifier = Modifier
+            .width(100.dp)
             .background(MaterialTheme.colorScheme.primary, CircleShape),
         colors = IconButtonDefaults.iconButtonColors(
             containerColor = MaterialTheme.colorScheme.primary,

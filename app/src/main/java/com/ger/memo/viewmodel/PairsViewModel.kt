@@ -5,11 +5,18 @@ import android.media.MediaPlayer
 import android.os.CountDownTimer
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.ger.memo.Animals
 import com.ger.memo.OnClick
 import com.ger.memo.R
+import com.ger.memo.StoreData
+import kotlinx.coroutines.launch
 
 class PairsViewModel(val app: Application) : AndroidViewModel(app), OnClick {
+
+    private val storeData = StoreData(app)
+
+    private var isSoundEnabled = false
 
     lateinit var timer: CountDownTimer
     val time = MutableLiveData(0)
@@ -20,6 +27,11 @@ class PairsViewModel(val app: Application) : AndroidViewModel(app), OnClick {
 
     init {
         startGame()
+        viewModelScope.launch {
+            storeData.getSoundPref.collect {
+                isSoundEnabled = it
+            }
+        }
     }
 
     private fun startGame(size :Int = 1) {
@@ -182,7 +194,9 @@ class PairsViewModel(val app: Application) : AndroidViewModel(app), OnClick {
         val newList = replacedList(state, index, copy)
         val newState = state.copy(list = newList, second = copy)
         if (state.first!!.drawable == copy.drawable) {
-            correct.start()
+            if (isSoundEnabled) {
+                correct.start()
+            }
             gameState.value = clean(newState)
         } else {
             val firstIndex = state.first.index
