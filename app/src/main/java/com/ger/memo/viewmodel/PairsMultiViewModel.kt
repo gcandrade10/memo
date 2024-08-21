@@ -159,7 +159,7 @@ class PairsMultiViewModel(val app: Application) : AndroidViewModel(app), OnClick
             gameOver = isGameOver,
             gameTime = time.value,
             tryCount = state.tryCount + 1,
-            winner = if (isGameOver) getPlayer(state) else null
+            winner = if (isGameOver) getWinnerPlayer(state) else null
         )
     }
 
@@ -195,21 +195,30 @@ class PairsMultiViewModel(val app: Application) : AndroidViewModel(app), OnClick
         }
     }
 
-    private fun getPlayer(newState: PairGameStateMulti): String {
-        return when (newState.turn) {
-            0 -> "Player 1"
-            1 -> "Player 2"
-            2 -> "Player 3"
-            else -> "Player 4"
+    private fun getWinnerPlayer(newState: PairGameStateMulti): String {
+        val list = listOf(
+            newState.p1Score to "Player 1",
+            newState.p2Score to "Player 2",
+            newState.p3Score to "Player 3",
+            newState.p4Score to "Player 4"
+        )
+
+        val sorted = list.sortedByDescending { it.first }
+
+        return if (sorted[0].first == sorted[1].first) {
+            "Tie"
+        } else {
+            sorted.first().second + " wins"
         }
     }
 
     private fun updateHistoricScore(newState: PairGameStateMulti): PairGameStateMulti {
-        return when (newState.turn) {
-            0 -> newState.copy(p1HistoricScore = newState.p1HistoricScore + 1)
-            1 -> newState.copy(p2HistoricScore = newState.p2HistoricScore + 1)
-            2 -> newState.copy(p3HistoricScore = newState.p3HistoricScore + 1)
-            else -> newState.copy(p4HistoricScore = newState.p4HistoricScore + 1)
+        return when (getWinnerPlayer(newState)) {
+            "Player 1 wins" -> newState.copy(p1HistoricScore = newState.p1HistoricScore + 1)
+            "Player 2 wins" -> newState.copy(p2HistoricScore = newState.p2HistoricScore + 1)
+            "Player 3 wins" -> newState.copy(p3HistoricScore = newState.p3HistoricScore + 1)
+            "Player 4 wins" -> newState.copy(p4HistoricScore = newState.p4HistoricScore + 1)
+            else -> newState
         }
     }
 

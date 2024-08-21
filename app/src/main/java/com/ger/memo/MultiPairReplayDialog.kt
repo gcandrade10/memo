@@ -24,7 +24,7 @@ fun MultiPairReplayDialog(
             onDismissRequest = { confirm.invoke() },
             text = {
                 Column(Modifier.fillMaxWidth()) {
-                    Text(text = "$winner wins")
+                    Text(text = winner ?: "")
                     Text(text = "Player 1: $p1HistoricScore")
                     Text(text = "Player 2: $p2HistoricScore")
                     if(playerCount!! > 2){
