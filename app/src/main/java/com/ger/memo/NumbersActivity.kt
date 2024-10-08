@@ -1,5 +1,6 @@
 package com.ger.memo
 
+import JetpackComposeDarkThemeTheme
 import android.content.res.Configuration
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -53,49 +54,52 @@ class NumbersActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            JetpackComposeDarkThemeTheme {
 
-            val gameStateState = gameStateG.observeAsState()
-            val gameState = gameStateState.value!!
+                val gameStateState = gameStateG.observeAsState()
+                val gameState = gameStateState.value!!
 
-            // A surface container using the 'background' color from the theme
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
-            ) {
-
-                val interactionSource = remember {
-                    MutableInteractionSource()
-                }
-                val onClick = object : OnClick {
-                    override fun onclick(index: Int) {
-                        val state = gameStateG.value!!
-                        when {
-                            state.list[index].discovering -> Unit
-                            isValid(state) -> flip(state, index)
-                            else -> reset(state, index)
-                        }
-//                        flip(state,index)
-                    }
-                }
-                NumbersGameBoardMinimal(onClick, interactionSource, gameState)
-            }
-            if (gameState.gameOver) {
-                MediaPlayer.create(this@NumbersActivity , R.raw.correct).start()
-                KonfettiView(
+                // A surface container using the 'background' color from the theme
+                Surface(
                     modifier = Modifier.fillMaxSize(),
-                    parties = parade()
-                )
-                CompleteDialog(3.0f, {
-                    Column(
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 24.dp)) {
-                        star(3.0f)
+                    color = MaterialTheme.colorScheme.background
+                ) {
+
+                    val interactionSource = remember {
+                        MutableInteractionSource()
                     }
-                }, {
-                    gameStateG.value = gameStateG.value!!.copy(gameOver = false)
-                }) {
-                    gameStateG.value = gameStateG.value!!.copy(generateRandomList(), false)
+                    val onClick = object : OnClick {
+                        override fun onclick(index: Int) {
+                            val state = gameStateG.value!!
+                            when {
+                                state.list[index].discovering -> Unit
+                                isValid(state) -> flip(state, index)
+                                else -> reset(state, index)
+                            }
+//                        flip(state,index)
+                        }
+                    }
+                    NumbersGameBoardMinimal(onClick, interactionSource, gameState)
+                }
+                if (gameState.gameOver) {
+                    MediaPlayer.create(this@NumbersActivity, R.raw.correct).start()
+                    KonfettiView(
+                        modifier = Modifier.fillMaxSize(),
+                        parties = parade()
+                    )
+                    CompleteDialog(3.0f, {
+                        Column(
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 24.dp)
+                        ) {
+                            star(3.0f)
+                        }
+                    }, {
+                        gameStateG.value = gameStateG.value!!.copy(gameOver = false)
+                    }) {
+                        gameStateG.value = gameStateG.value!!.copy(generateRandomList(), false)
+                    }
                 }
             }
         }

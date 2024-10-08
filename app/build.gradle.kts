@@ -11,8 +11,8 @@ android {
         applicationId = "com.ger.memo"
         minSdk = 24
         targetSdk = 34
-        versionCode = 14
-        versionName = "1.4"
+        versionCode = 142
+        versionName = "1.4.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -24,6 +24,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            resValue("string", "app_name", "Memo") // Release app name
+        }
+        debug {
+            applicationIdSuffix = ".debug"
+            resValue("string", "app_name", "Memo (debug)") // Release app name
         }
     }
     compileOptions {

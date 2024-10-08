@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Memo</string>
+    <string name="app_name">@string/app_name</string>
     <string name="tries">tries</string>
     <string name="title_activity_numbers">NumbersActivity</string>
 </resources>
