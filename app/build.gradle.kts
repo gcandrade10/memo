@@ -11,8 +11,8 @@ android {
         applicationId = "com.ger.memo"
         minSdk = 24
         targetSdk = 34
-        versionCode = 13
-        versionName = "1.3"
+        versionCode = 14
+        versionName = "1.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -43,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation ("nl.dionsegijn:konfetti-compose:2.0.4")
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     val composeBom = platform("androidx.compose:compose-bom:2024.03.00")

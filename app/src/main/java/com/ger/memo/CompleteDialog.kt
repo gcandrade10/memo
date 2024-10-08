@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import com.google.android.material.color.utilities.Score
 
 private val DialogPadding = PaddingValues(all = 24.dp)
 

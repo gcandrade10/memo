@@ -53,6 +53,11 @@ class Menu : ComponentActivity() {
                                 startActivity(Intent(this@Menu, PairsH::class.java))
                             }
                         }
+                        item {
+                            menuButton("Play numbers") {
+                                startActivity(Intent(this@Menu, NumbersActivity::class.java))
+                            }
+                        }
 //                        item {
 //                            menuButton("Levels") {
 //                                startActivity(Intent(this@Menu, Levels::class.java))
