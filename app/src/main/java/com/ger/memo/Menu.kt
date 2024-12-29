@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import com.ger.memo.numbers.NumbersActivity
 import com.ger.memo.viewmodel.MenuViewModel
 
 class Menu : ComponentActivity() {

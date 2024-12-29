@@ -15,6 +15,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 
@@ -38,7 +39,9 @@ fun CompleteDialog(
         tonalElevation = AlertDialogDefaults.TonalElevation,
     ) {
         Column(
-            modifier = Modifier.padding(DialogPadding)
+            modifier = Modifier
+                .testTag("completeDialog")
+                .padding(DialogPadding)
         ) {
             Row(Modifier.padding(bottom = 16.dp)) {
                 text()
