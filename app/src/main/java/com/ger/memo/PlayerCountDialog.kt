@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ger.memo.viewmodel.PairsMultiViewModel
 
@@ -58,10 +59,10 @@ fun PlayerCountDialog(
 //                }
             } else {
                 Column(Modifier.align(Alignment.Center)) {
-                    UserInput("Player 1")
-                    UserInput("Player 2")
-                    UserInput("Player 3")
-                    UserInput("Player 4")
+                    UserInput(stringResource(R.string.player_1))
+                    UserInput(stringResource(R.string.player_2))
+                    UserInput(stringResource(R.string.player_3))
+                    UserInput(stringResource(R.string.player_4))
                 }
             }
 
@@ -86,7 +87,7 @@ fun ButtonCount(i: Int, viewModel: PairsMultiViewModel) {
         viewModel.startGame(i)
         viewModel.gameState.value = viewModel.gameState.value?.copy(playerCount = i)
     }, Modifier.padding(end = 16.dp)) {
-        Text(text = "${i}P")
+        Text(text = stringResource(R.string.players, i))
     }
 }
 

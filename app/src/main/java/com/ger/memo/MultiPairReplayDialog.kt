@@ -6,6 +6,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun MultiPairReplayDialog(
@@ -36,11 +37,11 @@ fun MultiPairReplayDialog(
                 }
             },
             confirmButton = {
-                menuButton(text = "Back") {
+                menuButton(text = stringResource(R.string.back)) {
                     confirm.invoke()
                 }
             }, dismissButton = {
-                menuButton(text = "Play") {
+                menuButton(text = stringResource(R.string.play)) {
                     dismiss.invoke()
                 }
             }

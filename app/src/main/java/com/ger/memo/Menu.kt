@@ -23,7 +23,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import com.ger.memo.numbers.NumbersActivity
@@ -49,13 +52,25 @@ class Menu : ComponentActivity() {
                             .padding(start = 32.dp, end = 32.dp, bottom = 50.dp)
                             .align(Alignment.Center)
                     ) {
+                        if (BuildConfig.DEBUG) {
+                            item {
+                                val configuration = LocalConfiguration.current
+
+                                val screenWidthPx = configuration.screenWidthDp
+                                val screenHeightPx = configuration.screenHeightDp
+                                Column {
+                                    Text("PairItem: density: ${LocalDensity.current.density}")
+                                    Text("$screenHeightPx x $screenWidthPx")
+                                }
+                            }
+                        }
                         item {
-                            menuButton("Play") {
+                            menuButton(stringResource(R.string.play)) {
                                 startActivity(Intent(this@Menu, PairsH::class.java))
                             }
                         }
                         item {
-                            menuButton("Play numbers") {
+                            menuButton(stringResource(R.string.play_numbers)) {
                                 startActivity(Intent(this@Menu, NumbersActivity::class.java))
                             }
                         }
@@ -65,7 +80,7 @@ class Menu : ComponentActivity() {
 //                            }
 //                        }
                         item {
-                            menuButton("Multiplayer") {
+                            menuButton(stringResource(R.string.multiplayer)) {
                                 startActivity(Intent(this@Menu, PairsMulti::class.java))
                             }
                         }

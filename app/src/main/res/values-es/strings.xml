@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Memo</string>
+    <string name="tries">intentos</string>
+    <string name="title_activity_numbers">"Números"</string>
+    <string name="do_you_want_to_discard_the_current_game">Quieres salir?</string>
+    <string name="play">Jugar</string>
+    <string name="play_numbers">Jugar números</string>
+    <string name="multiplayer">Multijugador</string>
+    <string name="exit">Salir</string>
+    <string name="cancel">Cancelar</string>
+    <string name="restart">Reiniciar</string>
+    <string name="player_1">Jugador 1</string>
+    <string name="player_2">Jugador 2</string>
+    <string name="player_3">Jugador 3</string>
+    <string name="player_4">Jugador 3</string>
+    <string name="players">%1$sJ</string>
+    <string name="back">Volver</string>
+</resources>

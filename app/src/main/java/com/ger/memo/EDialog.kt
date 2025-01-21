@@ -13,6 +13,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 
@@ -26,7 +27,7 @@ fun EDialog(
     restart: () -> Unit,
     cancel: () -> Unit,
 ) = BasicAlertDialog(
-    onDismissRequest = { cancel },
+    onDismissRequest = { cancel() },
     modifier = Modifier,
     properties = DialogProperties()
 ) {
@@ -46,13 +47,13 @@ fun EDialog(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Column {
-                    menuButton(text = "Exit", Modifier.width(100.dp)) {
+                    menuButton(text = stringResource(R.string.exit), Modifier.width(100.dp)) {
                         confirm.invoke()
                     }
                 }
                 Column {
                     Row {
-                        menuButton(text = "Restart", Modifier.width(100.dp)) {
+                        menuButton(text = stringResource(R.string.restart), Modifier.width(100.dp)) {
                             restart.invoke()
                         }
                     }

@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun ExitDialog(
@@ -14,18 +14,23 @@ fun ExitDialog(
     dismiss: () -> Unit
 ) {
     AlertDialog(
-        onDismissRequest = {},
+        onDismissRequest = {
+            dismiss.invoke()
+        },
         text = {
             Column(Modifier.fillMaxWidth()) {
-                Text("Do you want to discard the current game?", Modifier.fillMaxWidth())
+                Text(
+                    stringResource(R.string.do_you_want_to_discard_the_current_game),
+                    Modifier.fillMaxWidth()
+                )
             }
         },
         confirmButton = {
-            menuButton(text = "Exit") {
+            menuButton(text = stringResource(R.string.exit)) {
                 confirm.invoke()
             }
         }, dismissButton = {
-            menuButton(text = "Cancel") {
+            menuButton(text = stringResource(R.string.cancel)) {
                 dismiss.invoke()
             }
         }

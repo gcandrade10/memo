@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -153,7 +154,7 @@ class PairsMulti : ComponentActivity() {
                         .align(Alignment.BottomStart)
                         .padding(start = 16.dp), gameState.p1Score,
                     gameState.turn == 0,
-                    "Player 1",
+                    stringResource(R.string.player_1),
                     Modifier
                         .align(Alignment.TopCenter)
                         .padding(bottom = 24.dp),
@@ -168,7 +169,7 @@ class PairsMulti : ComponentActivity() {
                         .padding(end = 16.dp),
                     gameState.p2Score,
                     gameState.turn == 1,
-                    "Player 2",
+                    stringResource(R.string.player_2),
                     Modifier
                         .align(Alignment.BottomCenter)
                         .padding(top = 24.dp),
@@ -183,7 +184,7 @@ class PairsMulti : ComponentActivity() {
                             .padding(end = 16.dp),
                         gameState.p3Score,
                         gameState.turn == 2,
-                        "Player 3",
+                        stringResource(R.string.player_3),
                         Modifier
                             .align(Alignment.TopCenter)
                             .padding(bottom = 24.dp),
@@ -200,7 +201,7 @@ class PairsMulti : ComponentActivity() {
                             .padding(start = 16.dp),
                         gameState.p4Score,
                         gameState.turn == 3,
-                        "Player 4",
+                        stringResource(R.string.player_4),
                         Modifier
                             .align(Alignment.BottomCenter)
                             .padding(top = 24.dp),

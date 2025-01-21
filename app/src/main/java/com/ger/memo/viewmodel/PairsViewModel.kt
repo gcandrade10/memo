@@ -47,7 +47,8 @@ class PairsViewModel(val app: Application) : AndroidViewModel(app), OnClick {
         gameState.value = gameState.value!!.copy(
             list = imageList,
             tappedList = BooleanArray(imageList.size),
-            size = size
+            size = size,
+            first = null
         )
         time.value = 0
         timer = getTimer(600500L)

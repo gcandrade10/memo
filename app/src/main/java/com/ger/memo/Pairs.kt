@@ -69,7 +69,12 @@ class Pairs : ComponentActivity() {
     }
 
     @Composable
-    fun FlipItem(image: Image, index: Int, interactionSource: MutableInteractionSource, cardFace: CardFace) {
+    fun FlipItem(
+        image: Image,
+        index: Int,
+        interactionSource: MutableInteractionSource,
+        cardFace: CardFace
+    ) {
         val rotation = animateFloatAsState(
             targetValue = cardFace.angle,
             animationSpec = tween(
@@ -83,7 +88,7 @@ class Pairs : ComponentActivity() {
                 cameraDistance = 12f * density
             },
         ) {
-            if(image.discovering || image.discovered){
+            if (image.discovering || image.discovered) {
                 Box(
                     Modifier
                         .fillMaxSize()
@@ -103,8 +108,7 @@ class Pairs : ComponentActivity() {
                             .aspectRatio(1f, matchHeightConstraintsFirst = true)
                     )
                 }
-            }
-            else {
+            } else {
                 Image(painter = painterResource(id = R.drawable.a122),
                     contentDescription = null,
                     modifier = Modifier
@@ -119,7 +123,6 @@ class Pairs : ComponentActivity() {
             }
         }
     }
-
 
 
     @OptIn(ExperimentalFoundationApi::class)

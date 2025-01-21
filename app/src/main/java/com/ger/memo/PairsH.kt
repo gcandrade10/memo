@@ -27,6 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import com.ger.memo.viewmodel.Image
@@ -56,7 +58,8 @@ class PairsH : ComponentActivity() {
                         Column(
                             Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 24.dp)) {
+                                .padding(vertical = 24.dp)
+                        ) {
                             star(score)
 //                                Text("Time: $gameTime seconds", Modifier.fillMaxWidth())
 //                                Text("$tryCount tries", Modifier.fillMaxWidth())
@@ -74,7 +77,7 @@ class PairsH : ComponentActivity() {
                     viewModel.pause()
                     EDialog({
                         Text(
-                            "Do you want to discard the current game?",
+                            stringResource(R.string.do_you_want_to_discard_the_current_game),
                             Modifier.fillMaxWidth(),
                             color = AlertDialogDefaults.textContentColor,
                         )
@@ -96,7 +99,8 @@ class PairsH : ComponentActivity() {
 
     private fun measureScore(pairGameState: PairGameState): Float {
         val total = pairGameState.size * 2
-        return (3.0 * (total - pairGameState.repetitions) / total).roundUpToMultipleOf(0.5).toFloat()
+        return (3.0 * (total - pairGameState.repetitions) / total).roundUpToMultipleOf(0.5)
+            .toFloat()
     }
 
 
@@ -167,6 +171,15 @@ class PairsH : ComponentActivity() {
             PairGameBoardMinimal(viewModel, gameState, interactionSource)
             Text("repetitions: ${gameState.repetitions}", color = Color.White)
         }
+    }
+
+    @Preview
+    @Composable
+    fun PreviewPairGameBoard() {
+        PairGameBoard(
+            PairsViewModel(application),
+            PairGameState(false, 0, emptyList(), BooleanArray(1), false)
+        )
     }
 }
 
