@@ -15,4 +15,6 @@
     <string name="player_4">Player 3</string>
     <string name="players">%1$sP</string>
     <string name="back">Back</string>
+    <string name="wanna_try_other_games">Wanna try other games?</string>
+    <string name="rate_us">Rate us</string>
 </resources>

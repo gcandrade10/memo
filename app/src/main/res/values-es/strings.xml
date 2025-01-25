@@ -16,4 +16,6 @@
     <string name="player_4">Jugador 3</string>
     <string name="players">%1$sJ</string>
     <string name="back">Volver</string>
+    <string name="wanna_try_other_games">¿Quieres probar otros juegos?</string>
+    <string name="rate_us">Califícanos</string>
 </resources>
